@@ -18,7 +18,7 @@ public class SavingsServiceImpl implements SavingsService {
     Logger log = LoggerFactory.logger(SavingsServiceImpl.class);
 
     @Override
-    public Integer[] calculateSavingsStatus(LocalDateTime startDate, LocalDateTime endDate, BigDecimal target, DeductionFrequency deductionFrequency) {
+    public Integer[] calculateFrequency(LocalDateTime startDate, LocalDateTime endDate, BigDecimal target, DeductionFrequency deductionFrequency) {
         int noOfDeductions = 0;
         log.info("start date: " + startDate);
         Integer[] frequency;
@@ -52,15 +52,16 @@ public class SavingsServiceImpl implements SavingsService {
 
     @Override
     public SavingsPlanStatus returnSavingsStatus (Integer[] frequency, LocalDateTime startDate, LocalDateTime endDate, BigDecimal target, DeductionFrequency deductionFrequency) {
-        BigDecimal amount1 = target.divide(BigDecimal.valueOf(frequency[0])).setScale(2, RoundingMode.CEILING);
+        BigDecimal amount1 = target.divide(BigDecimal.valueOf(frequency[0]), 2, RoundingMode.CEILING);
         BigDecimal amount2 = BigDecimal.ZERO;
         if (frequency[1] > 0) {
-           amount2 = target.divide(BigDecimal.valueOf(frequency[2])).setScale(2, RoundingMode.CEILING);
+           amount2 = target.divide(BigDecimal.valueOf(frequency[1]), 2, RoundingMode.CEILING);
         }
         return new SavingsPlanStatus()
                 .withAmount(new BigDecimal[]{amount1, amount2})
                 .withdFrequency(frequency)
                 .withendDate(endDate)
+                .withTarget(target)
                 .withFrequencyOfDeduction(deductionFrequency.toString())
                 .withStartDate(startDate);
     }

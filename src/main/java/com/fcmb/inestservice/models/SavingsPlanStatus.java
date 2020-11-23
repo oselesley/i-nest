@@ -3,6 +3,8 @@ package com.fcmb.inestservice.models;
 import com.fcmb.inestservice.utils.DeductionFrequency;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+import net.bytebuddy.build.ToStringPlugin;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -11,6 +13,7 @@ import static com.fcmb.inestservice.utils.DeductionFrequency.*;
 
 @Getter
 @Setter
+@ToString
 public class SavingsPlanStatus {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
