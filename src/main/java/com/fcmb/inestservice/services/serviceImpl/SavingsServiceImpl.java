@@ -20,26 +20,35 @@ public class SavingsServiceImpl implements SavingsService {
     @Override
     public Integer[] calculateSavingsStatus(LocalDateTime startDate, LocalDateTime endDate, BigDecimal target, DeductionFrequency deductionFrequency) {
         int noOfDeductions = 0;
+        log.info("start date: " + startDate);
         Integer[] frequency;
-                LocalDateTime nextDate = startDate;
-        while (nextDate.isBefore(startDate)) {
-            switch (deductionFrequency) {
-                case DAILY:
-                    noOfDeductions++;
+        LocalDateTime nextDate = startDate;
+
+        switch (deductionFrequency) {
+            case DAILY:
+                while (!nextDate.toLocalDate().isEqual(endDate.toLocalDate())) {
                     nextDate = nextDate.plusDays(1);
-                    break;
-                case WEEKLY:
                     noOfDeductions++;
+                }
+                break;
+            case WEEKLY:
+                while (!nextDate.toLocalDate().isEqual(endDate.toLocalDate())) {
                     nextDate = nextDate.plusWeeks(1);
-                    break;
-                case MONTHLY:
                     noOfDeductions++;
+                }
+                break;
+            case MONTHLY:
+                while (nextDate.toLocalDate().isBefore(endDate.toLocalDate())) {
                     nextDate = nextDate.plusMonths(1);
+                    noOfDeductions++;
+                }
+                break;
             }
-        }
-        frequency = nextDate.isEqual(endDate) ? new Integer[]{noOfDeductions, 0} : new Integer[]{noOfDeductions, noOfDeductions+1};
+
+        frequency = nextDate.toLocalDate().isEqual(endDate.toLocalDate()) ? new Integer[]{noOfDeductions, 0} : new Integer[]{noOfDeductions - 1, noOfDeductions};
         return frequency;
     }
+
 
     @Override
     public SavingsPlanStatus returnSavingsStatus (Integer[] frequency, LocalDateTime startDate, LocalDateTime endDate, BigDecimal target, DeductionFrequency deductionFrequency) {
