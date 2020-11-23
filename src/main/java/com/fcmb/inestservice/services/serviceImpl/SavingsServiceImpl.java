@@ -26,13 +26,15 @@ public class SavingsServiceImpl implements SavingsService {
             switch (deductionFrequency) {
                 case DAILY:
                     noOfDeductions++;
-                    nextDate.plusDays(1);
+                    nextDate = nextDate.plusDays(1);
+                    break;
                 case WEEKLY:
                     noOfDeductions++;
-                    nextDate.plusWeeks(1);
+                    nextDate = nextDate.plusWeeks(1);
+                    break;
                 case MONTHLY:
                     noOfDeductions++;
-                    nextDate.plusMonths(1);
+                    nextDate = nextDate.plusMonths(1);
             }
         }
         frequency = nextDate.isEqual(endDate) ? new Integer[]{noOfDeductions, 0} : new Integer[]{noOfDeductions, noOfDeductions+1};
