@@ -5,45 +5,47 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 
 import static com.fcmb.inestservice.utils.DeductionFrequency.*;
-import static java.math.BigInteger.*;
 
 @Getter
 @Setter
-public class SavingsPlan {
-    private User user;
+public class SavingsPlanStatus {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    private BigInteger totalAmount = ZERO;
-    private Integer duration;
-    private BigDecimal amount;
+    private BigDecimal target;
+    private Integer[] frequency;
+    private BigDecimal[] amount;
     private DeductionFrequency frequencyOfDeduction;
 
-    public SavingsPlan withStartDate(LocalDateTime startDate) {
+    public SavingsPlanStatus withStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
         return this;
     }
 
-    public SavingsPlan withendDate(LocalDateTime endDate) {
+    public SavingsPlanStatus withendDate(LocalDateTime endDate) {
         this.endDate = endDate;
         return this;
     }
 
-    public SavingsPlan withdurationDate(Integer duration) {
-        this.duration = duration;
+    public SavingsPlanStatus withdFrequency(Integer[] frequency) {
+        this.frequency = frequency;
         return this;
     }
 
-    public SavingsPlan withAmount(BigDecimal amount) {
+    public SavingsPlanStatus withAmount(BigDecimal[] amount) {
         this.amount = amount;
         return this;
     }
 
-    public SavingsPlan withFrequencyOfDedcution(String frequencyOfDedcution) {
-        setFrequencyOfDeduction(frequencyOfDedcution);
+    public SavingsPlanStatus withTarget(BigDecimal target) {
+        this.target = target;
+        return this;
+    }
+
+    public SavingsPlanStatus withFrequencyOfDeduction(String frequencyOfDeduction) {
+        setFrequencyOfDeduction(frequencyOfDeduction);
         return this;
     }
 
