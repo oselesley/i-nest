@@ -26,13 +26,13 @@ public class SavingsServiceImpl implements SavingsService {
 
         switch (deductionFrequency) {
             case DAILY:
-                while (!nextDate.toLocalDate().isEqual(endDate.toLocalDate())) {
+                while (nextDate.toLocalDate().isBefore(endDate.toLocalDate())) {
                     nextDate = nextDate.plusDays(1);
                     noOfDeductions++;
                 }
                 break;
             case WEEKLY:
-                while (!nextDate.toLocalDate().isEqual(endDate.toLocalDate())) {
+                while (nextDate.toLocalDate().isBefore(endDate.toLocalDate())) {
                     nextDate = nextDate.plusWeeks(1);
                     noOfDeductions++;
                 }

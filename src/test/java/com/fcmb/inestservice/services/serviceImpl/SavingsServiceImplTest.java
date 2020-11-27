@@ -38,6 +38,9 @@ class SavingsServiceImplTest {
         assertEquals(frequency.length, 2);
         assertEquals(frequency[0], 2);
         assertEquals(frequency[1], 3);
+
+        frequency = savingsService.calculateFrequency(LocalDateTime.now(), LocalDateTime.now().plusMonths(2), BigDecimal.valueOf(500_000), DeductionFrequency.WEEKLY);
+        log.info(Arrays.toString(frequency));
     }
 
     @Test
